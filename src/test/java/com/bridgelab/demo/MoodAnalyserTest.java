@@ -14,7 +14,6 @@ public class MoodAnalyserTest {
             Assert.assertEquals("HAPPY", mood);
         }catch(MoodAnalysisException e)
         {
-            //Assert.assertEquals("please enter proper message",e.getMessage());
             e.printStackTrace();
         }
     }
@@ -27,7 +26,6 @@ public class MoodAnalyserTest {
             Assert.assertEquals("SAD", mood);
         }catch(MoodAnalysisException e)
         {
-            //Assert.assertEquals("please enter proper message",e.getMessage());
             e.printStackTrace();
         }
     }
@@ -41,7 +39,6 @@ public class MoodAnalyserTest {
         }catch(MoodAnalysisException e)
         {
             Assert.assertEquals(MoodAnalysisException.EnumTest.NULL,e.enumTest);
-            //e.printStackTrace();
         }
 
     }
