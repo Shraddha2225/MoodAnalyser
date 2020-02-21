@@ -82,6 +82,11 @@ public class MoodAnalyserTest {
         }
     }
     @Test
+    public void givenMoodAnalyserClassParameterized_WhenProper_ShouldReturnObject() throws MoodAnalysisException {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser("I Am In A Happy Mood");
+        Assert.assertEquals(new MoodAnalyser("I Am In A Happy Mood"), moodAnalyser);
+    }
+    @Test
     public void givenMoodAnalyserClassDefault_WhenProper_ShouldReturnObject() {
         MoodAnalyser analyser = MoodAnalyserFactory.createMoodAnalyser();
         Assert.assertEquals(analyser, new MoodAnalyser());
@@ -101,10 +106,5 @@ public class MoodAnalyserTest {
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.EnumTest.NO_SUCH_METHOD, e.enumTest);
         }
-    }
-
-    @Test
-    public void givenMoodAnalyserParameterizedClass_WhenNoSuchClassError_ShouldReturnException() {
-
     }
 }

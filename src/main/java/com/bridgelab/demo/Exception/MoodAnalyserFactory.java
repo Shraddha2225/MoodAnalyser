@@ -4,6 +4,27 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
+    public static MoodAnalyser createMoodAnalyser(String s) {
+        try {
+            Class<?> MoodAnalyserClass = Class.forName("com.bridgelab.demo.MoodAnalyser");
+            Constructor<?> moodconstructor = MoodAnalyserClass.getConstructor(String.class);
+            Object moodobj = moodconstructor.newInstance("I Am In Happy Mood");
+            MoodAnalyser moodAnalyser = (MoodAnalyser) moodobj;
+            return moodAnalyser;
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public static MoodAnalyser createMoodAnalyser() {
         try {
             Class<?> MoodAnalyserClass = Class.forName("com.bridgelab.demo.MoodAnalyser");
