@@ -6,7 +6,7 @@ public class MoodAnalysisException extends Exception{
         this.enumTest=enumTest;
     }
     public enum EnumTest{
-        EMPTY ,NULL
+        ENTER_EMPTY,ENTER_NULL,NO_SUCH_CLASS,NO_SUCH_METHOD;
     }
     public EnumTest enumTest;
 }
