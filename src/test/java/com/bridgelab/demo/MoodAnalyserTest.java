@@ -107,4 +107,28 @@ public class MoodAnalyserTest {
             Assert.assertEquals(MoodAnalysisException.EnumTest.NO_SUCH_METHOD, e.enumTest);
         }
     }
+    @Test
+    public void givenObject_WhenProper_ShouldReturnHappy() {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser("I Am In Happy Mood");
+        try {
+            String analyseMood = MoodAnalyserFactory.invokedMethodWithReflection(moodAnalyser, "analyseMood");
+            Assert.assertEquals("HAPPY",analyseMood);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void givenObject_WhenNoSuchMethod_ShouldReturnException() {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser("I Am In Happy Mood");
+        try {
+            String analyse = MoodAnalyserFactory.invokedMethodWithReflection(moodAnalyser, "analyse");
+            //MoodAnalyserFactory.getConstructor("com.bridgelab.demo.MoodAnalyser",Integer.class);
+            Assert.assertEquals("HAPPY",analyse);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.EnumTest.NO_SUCH_METHOD, e.enumTest);
+            e.printStackTrace();
+        }
+
+    }
 }
