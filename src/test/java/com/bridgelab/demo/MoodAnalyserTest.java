@@ -117,18 +117,45 @@ public class MoodAnalyserTest {
             e.printStackTrace();
         }
     }
-
     @Test
     public void givenObject_WhenNoSuchMethod_ShouldReturnException() {
         MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser("I Am In Happy Mood");
         try {
             String analyse = MoodAnalyserFactory.invokedMethodWithReflection(moodAnalyser, "analyse");
-            //MoodAnalyserFactory.getConstructor("com.bridgelab.demo.MoodAnalyser",Integer.class);
             Assert.assertEquals("HAPPY",analyse);
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.EnumTest.NO_SUCH_METHOD, e.enumTest);
             e.printStackTrace();
         }
-
+    }
+    @Test
+    public void givenMessage_WhenProper_ShouldReturnHappy() {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser("I Am In Happy Mood");
+        try {
+            String analyse = MoodAnalyserFactory.invokedFieldWithReflection(moodAnalyser, "message", "I Am In Happy Mood");
+            Assert.assertEquals("HAPPY",analyse);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.EnumTest.NO_SUCH_FIELD,e.enumTest);
+        }
+    }
+    @Test
+    public void givenFieldName_WhenImproper_ShouldReturnException() {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser("I Am In Happy Mood");
+        try {
+            String analyse = MoodAnalyserFactory.invokedFieldWithReflection(moodAnalyser, "messagetest", "I Am In Happy Mood");
+            Assert.assertEquals("HAPPY",analyse);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    public void givenNullFieldValue_WhenProper_ShouldReturnException() {
+        MoodAnalyser moodAnalyser = MoodAnalyserFactory.createMoodAnalyser();
+        try {
+            MoodAnalyserFactory.invokedFieldWithReflection(moodAnalyser,"message",null);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.EnumTest.INVOKE_NULL,e.enumTest);
+            e.printStackTrace();
+        }
     }
 }

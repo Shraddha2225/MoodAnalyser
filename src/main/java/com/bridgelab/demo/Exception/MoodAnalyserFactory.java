@@ -1,6 +1,7 @@
 package com.bridgelab.demo.Exception;
 import com.bridgelab.demo.MoodAnalyser;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -25,7 +26,6 @@ public class MoodAnalyserFactory {
         }
         return null;
     }
-
     public static MoodAnalyser createMoodAnalyser() {
         try {
             Class<?> MoodAnalyserClass = Class.forName("com.bridgelab.demo.MoodAnalyser");
@@ -51,9 +51,9 @@ public class MoodAnalyserFactory {
             Class<?> moodAnalyserClass = Class.forName(param);
             return moodAnalyserClass.getConstructor(getMethod);
         } catch (ClassNotFoundException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_CLASS,e.getMessage());
+            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_CLASS,"Class Not Found");
         }catch(NoSuchMethodException e){
-            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_METHOD,e.getMessage());
+            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_METHOD,"Method Not Found");
         }
     }
     public static String invokedMethodWithReflection(Object moodObject, String method) throws MoodAnalysisException {
@@ -65,8 +65,25 @@ public class MoodAnalyserFactory {
         } catch (InvocationTargetException e) {
             e.printStackTrace();
         } catch (NoSuchMethodException e) {
-            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_METHOD,e.getMessage());
+            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_METHOD,"Method Name Is Improper");
         }
         return null;
+    }
+    public static String invokedFieldWithReflection(Object moodAnalyser,String fieldName,String fieldValue) throws MoodAnalysisException {
+        try {
+            Field declaredField = moodAnalyser.getClass().getDeclaredField(fieldName);
+            declaredField.setAccessible(true);
+            declaredField.set(moodAnalyser,fieldValue);
+            return (String) moodAnalyser.getClass().getDeclaredMethod("analyseMood").invoke(moodAnalyser);
+        } catch (NoSuchFieldException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.NO_SUCH_FIELD,"Field Not Found");
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.EnumTest.INVOKE_NULL,"Invocation Error");
+        }
+        return "fieldName";
     }
 }
